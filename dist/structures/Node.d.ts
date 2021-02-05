@@ -8,7 +8,8 @@ export default class Node {
     host: string;
     port: number | string;
     password: string;
+    secure?: string;
     private readonly methods;
     constructor(client: LavasfyClient, options: NodeOptions);
-    load(url: string): Promise<LavalinkTrackResponse>;
+    load(url: string): Promise<LavalinkTrackResponse | null>;
 }
