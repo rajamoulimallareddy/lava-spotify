@@ -24,7 +24,7 @@ export default class LavasfyClient {
     }
 
     public addNode(options: NodeOptions): void {
-        this.nodes.set(options.id, new Node(this, options));
+        this.nodes.set(options.name, new Node(this, options));
     }
 
     public isValidURL(url: string): boolean {
