@@ -18,7 +18,7 @@ class LavasfyClient {
             this.addNode(nodeOpt);
     }
     addNode(options) {
-        this.nodes.set(options.id, new Node_1.default(this, options));
+        this.nodes.set(options.name, new Node_1.default(this, options));
     }
     isValidURL(url) {
         return this.spotifyPattern.test(url);
