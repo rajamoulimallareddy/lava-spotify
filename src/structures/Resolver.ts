@@ -27,10 +27,8 @@ export default class Resolver {
         });
 
         return {
-            loadType: album ? "PLAYLIST_LOADED" : "NO_MATCHES",
-            playlistInfo: {
-                name: album?.name
-            },
+            playlistName: album?.name,
+            type: album ? "PLAYLIST_LOADED" : "NO_MATCHES",
             tracks: album
                 ? (await Promise.all(album.tracks.items.map(x => this.resolve(x)))).filter(Boolean) as LavalinkTrack[]
                 : []
@@ -47,10 +45,8 @@ export default class Resolver {
         const playlistTracks = playlist ? await this.getPlaylistTracks(playlist) : [];
 
         return {
-            loadType: playlist ? "PLAYLIST_LOADED" : "NO_MATCHES",
-            playlistInfo: {
-                name: playlist?.name
-            },
+            playlistName: playlist?.name,
+            type: playlist ? "PLAYLIST_LOADED" : "NO_MATCHES",
             tracks: (await Promise.all(playlistTracks.map(x => this.resolve(x.track)))).filter(Boolean) as LavalinkTrack[]
         };
     }
@@ -65,8 +61,8 @@ export default class Resolver {
         const lavaTrack = track && await this.resolve(track);
 
         return {
-            loadType: lavaTrack ? "TRACK_LOADED" : "NO_MATCHES",
-            playlistInfo: {},
+            type: lavaTrack ? "TRACK_LOADED" : "NO_MATCHES",
+            playlistName: '',
             tracks: lavaTrack ? [lavaTrack] : []
         };
     }
