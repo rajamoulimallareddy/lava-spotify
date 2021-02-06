@@ -1,8 +1,9 @@
 export interface NodeOptions {
-    id: string;
+    name: string;
     host: string;
     port: number | string;
-    password: string;
+    auth: string;
+    group: string;
 }
 export interface LavalinkTrack {
     track: string;

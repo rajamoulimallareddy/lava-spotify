@@ -111,7 +111,7 @@ class Resolver {
                 // @ts-expect-error 2322
                 const { body } = yield node_superfetch_1.default
                     .get(`http://${this.node.options.host}:${this.node.options.port}/loadtracks?${params}`)
-                    .set("Authorization", this.node.options.password);
+                    .set("Authorization", this.node.options.auth);
                 if (body.tracks.length) {
                     this.cache.set(track.id, Object.freeze(body.tracks[0]));
                     return Util_1.default.structuredClone(body.tracks[0]);
