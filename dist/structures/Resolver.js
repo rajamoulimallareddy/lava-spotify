@@ -17,13 +17,37 @@ class Resolver {
     get playlistPageLimit() {
         return this.client.options.playlistPageLimit === 0
             ? Infinity
-            : this.client.options.playlistPageLimit;
+            : this.client.options.playlistPageLoadLimit;
     }
-    async getAlbum(id) {
-        const album = await Util_1.default.tryPromise(async () => {
-            return (await node_superfetch_1.default
-                .get(`${this.client.baseURL}/albums/${id}`)
-                .set("Authorization", this.token)).body;
+    getAlbum(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const album = yield Util_1.default.tryPromise(() => __awaiter(this, void 0, void 0, function* () {
+                return (yield node_superfetch_1.default
+                    .get(`${this.client.baseURL}/albums/${id}`)
+                    .set("Authorization", this.token)).body;
+            }));
+            return {
+                playlistName: album === null || album === void 0 ? void 0 : album.name,
+                type: album ? "PLAYLIST" : "NO_MATCHES",
+                tracks: album
+                    ? (yield Promise.all(album.tracks.items.map(x => this.resolve(x)))).filter(Boolean)
+                    : []
+            };
+        });
+    }
+    getPlaylist(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const playlist = yield Util_1.default.tryPromise(() => __awaiter(this, void 0, void 0, function* () {
+                return (yield node_superfetch_1.default
+                    .get(`${this.client.baseURL}/playlists/${id}`)
+                    .set("Authorization", this.token)).body;
+            }));
+            const playlistTracks = playlist ? yield this.getPlaylistTracks(playlist) : [];
+            return {
+                playlistName: playlist === null || playlist === void 0 ? void 0 : playlist.name,
+                type: playlist ? "PLAYLIST" : "NO_MATCHES",
+                tracks: (yield Promise.all(playlistTracks.map(x => this.resolve(x.track)))).filter(Boolean)
+            };
         });
         return {
             loadType: album ? "PLAYLIST_LOADED" : "NO_MATCHES",
