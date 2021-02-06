@@ -28,7 +28,7 @@ export default class Resolver {
 
         return {
             playlistName: album?.name,
-            type: album ? "PLAYLIST_LOADED" : "NO_MATCHES",
+            type: album ? "PLAYLIST" : "NO_MATCHES",
             tracks: album
                 ? (await Promise.all(album.tracks.items.map(x => this.resolve(x)))).filter(Boolean) as LavalinkTrack[]
                 : []
@@ -46,7 +46,7 @@ export default class Resolver {
 
         return {
             playlistName: playlist?.name,
-            type: playlist ? "PLAYLIST_LOADED" : "NO_MATCHES",
+            type: playlist ? "PLAYLIST" : "NO_MATCHES",
             tracks: (await Promise.all(playlistTracks.map(x => this.resolve(x.track)))).filter(Boolean) as LavalinkTrack[]
         };
     }
@@ -61,7 +61,7 @@ export default class Resolver {
         const lavaTrack = track && await this.resolve(track);
 
         return {
-            type: lavaTrack ? "TRACK_LOADED" : "NO_MATCHES",
+            type: lavaTrack ? "TRACK" : "NO_MATCHES",
             playlistName: '',
             tracks: lavaTrack ? [lavaTrack] : []
         };

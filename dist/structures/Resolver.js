@@ -37,7 +37,7 @@ class Resolver {
             }));
             return {
                 playlistName: album === null || album === void 0 ? void 0 : album.name,
-                type: album ? "PLAYLIST_LOADED" : "NO_MATCHES",
+                type: album ? "PLAYLIST" : "NO_MATCHES",
                 tracks: album
                     ? (yield Promise.all(album.tracks.items.map(x => this.resolve(x)))).filter(Boolean)
                     : []
@@ -54,7 +54,7 @@ class Resolver {
             const playlistTracks = playlist ? yield this.getPlaylistTracks(playlist) : [];
             return {
                 playlistName: playlist === null || playlist === void 0 ? void 0 : playlist.name,
-                type: playlist ? "PLAYLIST_LOADED" : "NO_MATCHES",
+                type: playlist ? "PLAYLIST" : "NO_MATCHES",
                 tracks: (yield Promise.all(playlistTracks.map(x => this.resolve(x.track)))).filter(Boolean)
             };
         });
