@@ -2,7 +2,7 @@ export interface NodeOptions {
     name: string;
     host: string;
     port: number | string;
-    password: string;
+    auth: string;
     secure: boolean;
 }
 

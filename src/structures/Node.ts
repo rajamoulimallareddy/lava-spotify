@@ -8,7 +8,7 @@ export default class Node {
     public id!: string;
     public host!: string;
     public port!: number | string;
-    public password!: string;
+    public auth!: string;
     public secure?: string;
     
     private readonly methods = {
@@ -22,7 +22,7 @@ export default class Node {
             id: { value: options.name },
             host: { value: options.host },
             port: { value: options.port },
-            password: { value: options.password },
+            password: { value: options.auth },
             secure: { value: options.secure }
         });
     }

@@ -7,7 +7,7 @@ export default class Node {
     id: string;
     host: string;
     port: number | string;
-    password: string;
+    auth: string;
     secure?: string;
     private readonly methods;
     constructor(client: LavasfyClient, options: NodeOptions);
