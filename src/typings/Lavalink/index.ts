@@ -21,7 +21,7 @@ export interface LavalinkTrack {
 }
 
 export interface LavalinkTrackResponse {
-    type: "TRACK_LOADED" | "PLAYLIST_LOADED" | "SEARCH_RESULT" | "NO_MATCHES" | "LOAD_FAILED";
+    type: "TRACK" | "PLAYLIST" | "SEARCH";
     playlistName: string | undefined | null;
     tracks: LavalinkTrack[];
     exception?: {
