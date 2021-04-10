@@ -19,7 +19,7 @@ const lavasfy = new LavasfyClient({
     clientSecret: "a client secret"
 }, [
     {
-        id: "main",
+        name: "main",
         host: "localhost",
         port: 2333,
         password: "youshallnotpass"
