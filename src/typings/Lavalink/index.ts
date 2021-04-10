@@ -27,5 +27,5 @@ export interface LavalinkTrackResponse {
     exception?: {
         message: string;
         severity: string;
-    }
+    };
 } 

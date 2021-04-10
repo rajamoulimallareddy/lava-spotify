@@ -30,7 +30,7 @@ export default class Resolver {
             type: "PLAYLIST",
             playlistName: album?.name,
             tracks: (await Promise.all(album.tracks.items.map(x => this.resolve(x)))).filter(Boolean) as LavalinkTrack[]
-        } : null
+        } : null;
     }
 
     public async getPlaylist(id: string): Promise<LavalinkTrackResponse | null> {
@@ -46,7 +46,7 @@ export default class Resolver {
             type: "PLAYLIST",
             playlistName: playlist?.name,
             tracks: (await Promise.all(playlistTracks.map(x => this.resolve(x.track)))).filter(Boolean) as LavalinkTrack[]
-        } : null
+        } : null;
     }
 
     public async getTrack(id: string): Promise<LavalinkTrackResponse | null> {
@@ -59,10 +59,10 @@ export default class Resolver {
         const lavaTrack = track && await this.resolve(track);
 
         return lavaTrack ? {
-            type: "PLAYLIST" ,
+            type: "PLAYLIST",
             playlistName: null,
             tracks: [lavaTrack]
-        } : null
+        } : null;
     }
 
     private async getPlaylistTracks(playlist: {
@@ -102,7 +102,7 @@ export default class Resolver {
 
             // @ts-expect-error 2322
             const { body }: { body: LavalinkTrackResponse } = await request
-                .get(`http${this.node.secure ? 's' : ''}://${this.node.host}:${this.node.port}/loadtracks?${params}`)
+                .get(`http${this.node.secure ? "s" : ""}://${this.node.host}:${this.node.port}/loadtracks?${params}`)
                 .set("Authorization", this.node.password);
 
             if (body.tracks.length) {
