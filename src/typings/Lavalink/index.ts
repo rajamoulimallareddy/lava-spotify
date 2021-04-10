@@ -3,6 +3,7 @@ export interface NodeOptions {
     host: string;
     port: number | string;
     password: string;
+    secure: boolean;
 }
 
 export interface LavalinkTrack {
@@ -20,14 +21,11 @@ export interface LavalinkTrack {
 }
 
 export interface LavalinkTrackResponse {
-    loadType: "TRACK_LOADED" | "PLAYLIST_LOADED" | "SEARCH_RESULT" | "NO_MATCHES" | "LOAD_FAILED";
-    playlistInfo: {
-        name?: string;
-        selectedTrack?: number;
-    };
+    type: "TRACK_LOADED" | "PLAYLIST_LOADED" | "SEARCH_RESULT" | "NO_MATCHES" | "LOAD_FAILED";
+    playlistName: string | undefined | null;
     tracks: LavalinkTrack[];
     exception?: {
         message: string;
         severity: string;
-    };
-}
+    }
+} 

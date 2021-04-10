@@ -19,25 +19,21 @@ export default class Resolver {
             : this.client.options.playlistPageLimit!;
     }
 
-    public async getAlbum(id: string): Promise<LavalinkTrackResponse> {
+    public async getAlbum(id: string): Promise<LavalinkTrackResponse | null> {
         const album = await Util.tryPromise(async () => {
             return (await request
                 .get(`${this.client.baseURL}/albums/${id}`)
                 .set("Authorization", this.token)).body as SpotifyAlbum;
         });
 
-        return {
-            loadType: album ? "PLAYLIST_LOADED" : "NO_MATCHES",
-            playlistInfo: {
-                name: album?.name
-            },
-            tracks: album
-                ? (await Promise.all(album.tracks.items.map(x => this.resolve(x)))).filter(Boolean) as LavalinkTrack[]
-                : []
-        };
+        return album ? {
+            type: "PLAYLIST_LOADED",
+            playlistName: album?.name,
+            tracks: (await Promise.all(album.tracks.items.map(x => this.resolve(x)))).filter(Boolean) as LavalinkTrack[]
+        } : null
     }
 
-    public async getPlaylist(id: string): Promise<LavalinkTrackResponse> {
+    public async getPlaylist(id: string): Promise<LavalinkTrackResponse | null> {
         const playlist = await Util.tryPromise(async () => {
             return (await request
                 .get(`${this.client.baseURL}/playlists/${id}`)
@@ -46,16 +42,14 @@ export default class Resolver {
 
         const playlistTracks = playlist ? await this.getPlaylistTracks(playlist) : [];
 
-        return {
-            loadType: playlist ? "PLAYLIST_LOADED" : "NO_MATCHES",
-            playlistInfo: {
-                name: playlist?.name
-            },
+        return playlist ? {
+            type: "PLAYLIST_LOADED",
+            playlistName: playlist?.name,
             tracks: (await Promise.all(playlistTracks.map(x => this.resolve(x.track)))).filter(Boolean) as LavalinkTrack[]
-        };
+        } : null
     }
 
-    public async getTrack(id: string): Promise<LavalinkTrackResponse> {
+    public async getTrack(id: string): Promise<LavalinkTrackResponse | null> {
         const track = await Util.tryPromise(async () => {
             return (await request
                 .get(`${this.client.baseURL}/tracks/${id}`)
@@ -64,11 +58,11 @@ export default class Resolver {
 
         const lavaTrack = track && await this.resolve(track);
 
-        return {
-            loadType: lavaTrack ? "TRACK_LOADED" : "NO_MATCHES",
-            playlistInfo: {},
-            tracks: lavaTrack ? [lavaTrack] : []
-        };
+        return lavaTrack ? {
+            type: "TRACK_LOADED" ,
+            playlistName: null,
+            tracks: [lavaTrack]
+        } : null
     }
 
     private async getPlaylistTracks(playlist: {
@@ -108,7 +102,7 @@ export default class Resolver {
 
             // @ts-expect-error 2322
             const { body }: { body: LavalinkTrackResponse } = await request
-                .get(`http://${this.node.host}:${this.node.port}/loadtracks?${params}`)
+                .get(`http${this.node.secure ? 's' : ''}://${this.node.host}:${this.node.port}/loadtracks?${params}`)
                 .set("Authorization", this.node.password);
 
             if (body.tracks.length) {

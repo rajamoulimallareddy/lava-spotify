@@ -9,7 +9,8 @@ export default class Node {
     public host!: string;
     public port!: number | string;
     public password!: string;
-
+    public secure?: string;
+    
     private readonly methods = {
         album: this.resolver.getAlbum.bind(this.resolver),
         playlist: this.resolver.getPlaylist.bind(this.resolver),
@@ -21,11 +22,12 @@ export default class Node {
             id: { value: options.id },
             host: { value: options.host },
             port: { value: options.port },
-            password: { value: options.password }
+            password: { value: options.password },
+            secure: { value: options.secure }
         });
     }
 
-    public load(url: string): Promise<LavalinkTrackResponse> {
+    public load(url: string): Promise<LavalinkTrackResponse | null> {
         const [, type, id] = this.client.spotifyPattern.exec(url) ?? [];
         return this.methods[type as keyof Node["methods"]](id);
     }
