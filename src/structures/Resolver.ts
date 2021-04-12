@@ -24,12 +24,12 @@ export default class Resolver {
                 .get(`${this.client.baseURL}/albums/${id}`)
                 .set("Authorization", this.token)).body as SpotifyAlbum;
         });
-
-        return album ? {
+        const response =  {
             type: "PLAYLIST",
             playlistName: album?.name,
-            tracks: (await Promise.all(album.tracks.items.map(x => this.resolve(x)))).filter(Boolean) as LavalinkTrack[]
-        } : null;
+            tracks: await Promise.all(album!.tracks.items.map(x => this.resolve(x))) as LavalinkTrack[]
+        }
+        return album ? (response as LavalinkTrackResponse) : null;
     }
 
     public async getPlaylist(id: string): Promise<LavalinkTrackResponse | null> {
@@ -43,7 +43,7 @@ export default class Resolver {
         const response = {
             type: "PLAYLIST",
             playlistName: playlist?.name,
-            tracks: (await Promise.all(playlistTracks.map(x => this.resolve(x.track)))).filter(Boolean) as LavalinkTrack[]
+            tracks: await Promise.all(playlistTracks.map(x => this.resolve(x.track))) as LavalinkTrack[]
         };
         return playlist ? (response as LavalinkTrackResponse) : null;
     }
