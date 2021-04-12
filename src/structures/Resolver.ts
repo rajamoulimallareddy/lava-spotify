@@ -24,11 +24,11 @@ export default class Resolver {
                 .get(`${this.client.baseURL}/albums/${id}`)
                 .set("Authorization", this.token)).body as SpotifyAlbum;
         });
-        const response =  {
+        const response = {
             type: "PLAYLIST",
             playlistName: album?.name,
             tracks: (await Promise.all(album!.tracks.items.map(x => this.resolve(x)))) as LavalinkTrack[]
-        }
+        };
         return album ? (response as LavalinkTrackResponse) : null;
     }
 
@@ -57,11 +57,11 @@ export default class Resolver {
 
         const lavaTrack = track && await this.resolve(track);
         const result = {
-            loadType: "TRACK",
-            playlistInfo: {},
+            type: "TRACK",
+            playlistName: null,
             tracks: lavaTrack ? [lavaTrack] : []
         };
-        return lavaTrack ? (result as any) : null
+        return lavaTrack ? (result as LavalinkTrackResponse) : null;
     }
 
     private async getPlaylistTracks(playlist: {
