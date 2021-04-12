@@ -2,7 +2,6 @@ import Node from "./Node";
 import request from "node-superfetch";
 import { LavalinkTrack, LavalinkTrackResponse, SpotifyAlbum, SpotifyPlaylist, SpotifyTrack } from "../typings";
 import Util from "../Util";
-
 export default class Resolver {
     public client = this.node.client;
     public cache = new Map<string, LavalinkTrack>();
@@ -41,12 +40,12 @@ export default class Resolver {
         });
 
         const playlistTracks = playlist ? await this.getPlaylistTracks(playlist) : [];
-
-        return playlist ? {
+        const response = {
             type: "PLAYLIST",
             playlistName: playlist?.name,
             tracks: (await Promise.all(playlistTracks.map(x => this.resolve(x.track)))).filter(Boolean) as LavalinkTrack[]
-        } : null;
+        };
+        return playlist ? (response as LavalinkTrackResponse) : null;
     }
 
     public async getTrack(id: string): Promise<LavalinkTrackResponse | null> {
@@ -57,12 +56,12 @@ export default class Resolver {
         });
 
         const lavaTrack = track && await this.resolve(track);
-
-        return lavaTrack ? {
+        const response = {
             type: "PLAYLIST",
             playlistName: null,
-            tracks: [lavaTrack]
-        } : null;
+            tracks: lavaTrack ? [lavaTrack] : []
+        }; 
+        return lavaTrack ? (response as LavalinkTrackResponse) : null;
     }
 
     private async getPlaylistTracks(playlist: {
