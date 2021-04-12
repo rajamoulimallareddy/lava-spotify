@@ -27,9 +27,9 @@ export default class Resolver {
         const response = {
             type: "PLAYLIST",
             playlistName: album?.name,
-            tracks: (await Promise.all(album!.tracks.items.map(x => this.resolve(x)))) as LavalinkTrack[]
+            tracks: album?.tracks.items ? (await Promise.all(album!.tracks.items.map(x => this.resolve(x)))) as LavalinkTrack[] : []
         };
-        return album ? (response as any) : null;
+        return album?.tracks.items ? (response as any) : null;
     }
 
     public async getPlaylist(id: string): Promise<LavalinkTrackResponse | null> {
