@@ -61,7 +61,7 @@ export default class Resolver {
             playlistName: null,
             tracks: lavaTrack ? [lavaTrack] : []
         };
-        return lavaTrack ? (result as LavalinkTrackResponse) : null;
+        return lavaTrack ? (result as any) : null;
     }
 
     private async getPlaylistTracks(playlist: {
