@@ -27,7 +27,7 @@ export default class Resolver {
         const response =  {
             type: "PLAYLIST",
             playlistName: album?.name,
-            tracks: await Promise.all(album!.tracks.items.map(x => this.resolve(x))) as LavalinkTrack[]
+            tracks: (await Promise.all(album!.tracks.items.map(x => this.resolve(x)))) as LavalinkTrack[]
         }
         return album ? (response as LavalinkTrackResponse) : null;
     }
@@ -43,7 +43,7 @@ export default class Resolver {
         const response = {
             type: "PLAYLIST",
             playlistName: playlist?.name,
-            tracks: await Promise.all(playlistTracks.map(x => this.resolve(x.track))) as LavalinkTrack[]
+            tracks: (await Promise.all(playlistTracks.map(x => this.resolve(x.track)))) as LavalinkTrack[]
         };
         return playlist ? (response as LavalinkTrackResponse) : null;
     }
@@ -57,7 +57,7 @@ export default class Resolver {
 
         const lavaTrack = track && await this.resolve(track);
         const response = {
-            type: "PLAYLIST",
+            type: "TRACK",
             playlistName: null,
             tracks: lavaTrack ? [lavaTrack] : []
         }; 
