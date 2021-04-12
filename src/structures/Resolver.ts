@@ -101,7 +101,7 @@ export default class Resolver {
 
             // @ts-expect-error 2322
             const { body }: { body: LavalinkTrackResponse } = await request
-                .get(`http${this.node.secure ? "s" : ""}://${this.node.host}:${this.node.port}/loadtracks?${params}`)
+                .get(`http://${this.node.host}:${this.node.port}/loadtracks?${params}`)
                 .set("Authorization", this.node.auth);
 
             if (body.tracks.length) {
