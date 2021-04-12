@@ -27,7 +27,7 @@ export default class Resolver {
         const response = {
             type: "PLAYLIST",
             playlistName: album?.name,
-            tracks: album?.tracks.items.length ? (await Promise.all(album!.tracks.items.map(x => this.resolve(x)))) as LavalinkTrack[] : []
+            tracks: album?.tracks.items.length ? (await Promise.all(album.tracks.items.map(x => this.resolve(x)))) as LavalinkTrack[] : []
         };
         return album?.tracks.items.length ? (response as any) : null;
     }
