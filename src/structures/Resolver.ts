@@ -114,6 +114,7 @@ export default class Resolver {
                     });
                 }
                 this.cache.set(track.id, Object.freeze(lavaTrack));
+                return Util.structuredClone(body.tracks[0]);
             }
 
             return Util.structuredClone(body.tracks[0]);
