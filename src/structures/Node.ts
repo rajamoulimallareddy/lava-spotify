@@ -22,7 +22,7 @@ export default class Node {
             name: { value: options.name, enumerable: true },
             host: { value: options.host },
             port: { value: options.port },
-            password: { value: options.auth },
+            auth: { value: options.auth },
             secure: { value: options.secure }
         });
     }
