@@ -56,12 +56,12 @@ export default class Resolver {
         });
 
         const lavaTrack = track && await this.resolve(track);
-        const response = {
-            type: "TRACK",
-            playlistName: null,
+        const result = {
+            loadType: "TRACK",
+            playlistInfo: {},
             tracks: lavaTrack ? [lavaTrack] : []
-        }; 
-        return lavaTrack ? (response as LavalinkTrackResponse) : null;
+        };
+        return lavaTrack ? (result as any) : null
     }
 
     private async getPlaylistTracks(playlist: {
@@ -114,7 +114,6 @@ export default class Resolver {
                     });
                 }
                 this.cache.set(track.id, Object.freeze(lavaTrack));
-                return Util.structuredClone(body.tracks[0]);
             }
 
             return Util.structuredClone(body.tracks[0]);
