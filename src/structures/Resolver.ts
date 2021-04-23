@@ -27,7 +27,7 @@ export default class Resolver {
         const response = {
             type: "PLAYLIST",
             playlistName: album?.name,
-            tracks: album?.tracks.items.length ? (await Promise.all(album.tracks.items.map(x => this.resolve(x)))) as LavalinkTrack[] : []
+            tracks: album?.tracks.items.length ? (await Promise.all(album.tracks.items.map(x => this.resolve(x)))).filter(Boolean) as LavalinkTrack[] : []
         };
         return album?.tracks.items.length ? (response as any) : null;
     }
@@ -43,7 +43,7 @@ export default class Resolver {
         const response = {
             type: "PLAYLIST",
             playlistName: playlist?.name,
-            tracks: (await Promise.all(playlistTracks.map(x => this.resolve(x.track)))) as LavalinkTrack[]
+            tracks: (await Promise.all(playlistTracks.map(x => this.resolve(x.track)))).filter(Boolean) as LavalinkTrack[]
         };
         return playlist ? (response as any) : null;
     }
@@ -105,6 +105,9 @@ export default class Resolver {
                     });
                 }
                 this.cache.set(track.id, Object.freeze(lavaTrack));
+                return Util.structuredClone(body.tracks[0]);
+            } else {
+                return undefined;
             }
             return Util.structuredClone(lavaTrack);
         } catch {
