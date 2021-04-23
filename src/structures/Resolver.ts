@@ -105,9 +105,6 @@ export default class Resolver {
                     });
                 }
                 this.cache.set(track.id, Object.freeze(lavaTrack));
-                return Util.structuredClone(body.tracks[0]);
-            } else {
-                return undefined;
             }
             return Util.structuredClone(lavaTrack);
         } catch {
@@ -122,7 +119,7 @@ export default class Resolver {
             });
             // @ts-expect-error 2322
             const { body: response }: { body: LavalinkTrackResponse } = await request
-                .get(`http${this.node.secure ? 's' : ''}://${this.node.host}:${this.node.port}/loadtracks?${params.toString()}`)
+                .get(`http${this.node.secure ? "s" : ""}://${this.node.host}:${this.node.port}/loadtracks?${params.toString()}`)
                 .set("Authorization", this.node.auth);
             return response.tracks[0];
         } catch {
