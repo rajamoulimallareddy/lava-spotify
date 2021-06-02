@@ -1,9 +1,18 @@
-import { ClientOptions } from "./typings";
+import { ClientOptions, NodeOptions } from "./typings";
 
 export const DefaultClientOptions: ClientOptions = {
     clientID: "",
     clientSecret: "",
-    playlistPageLimit: 2,
+    playlistLoadLimit: 2,
     audioOnlyResults: false,
-    useSpotifyMetadata: false
+    useSpotifyMetadata: false,
+    autoResolve: false
+};
+
+export const DefaultNodeOptions: NodeOptions = {
+    id: "",
+    host: "",
+    port: "",
+    auth: "",
+    secure: false
 };
