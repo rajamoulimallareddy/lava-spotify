@@ -2,31 +2,33 @@ import { ClientOptions, NodeOptions } from "./typings";
 import request from "node-superfetch";
 import Node from "./structures/Node";
 import Util from "./Util";
-import { DefaultClientOptions } from "./Constants";
+import { DefaultClientOptions, DefaultNodeOptions } from "./Constants";
 
 export default class LavasfyClient {
-    public readonly baseURL!: string;
+    /** The provided options when the class was instantiated */
     public options: Readonly<ClientOptions>;
+    /** The {@link Node}s are stored here */
     public nodes = new Map<string, Node>();
-    public token!: string | null;
-    public spotifyPattern!: RegExp;
+    /** Spotify API base URL */
+    public readonly baseURL!: string;
+    /** A RegExp that will be used for validate and parse URLs */
+    public readonly spotifyPattern!: RegExp;
+    /** The token to access the Spotify API */
+    public readonly token!: string | null;
+
     private nextRequest?: NodeJS.Timeout;
 
     public constructor(options: ClientOptions, nodesOpt: NodeOptions[]) {
-        Object.defineProperties(this, {
-            baseURL: {
-                value: "https://api.spotify.com/v1",
-                configurable: false,
-                enumerable: true,
-                writable: false
-            },
-            token: {
-                value: null,
-                configurable: true
-            },
-            spotifyPattern: {
-                value: /^(?:https:\/\/open\.spotify\.com\/(?:user\/[A-Za-z0-9]+\/)?|spotify:)(album|playlist|track)(?:[/:])([A-Za-z0-9]+).*$/
-            }
+        Object.defineProperty(this, "baseURL", {
+            enumerable: true,
+            value: "https://api.spotify.com/v1"
+        });
+        Object.defineProperty(this, "spotifyPattern", {
+            value: /^(?:https:\/\/open\.spotify\.com\/(?:user\/[A-Za-z0-9]+\/)?|spotify:)(album|playlist|track)(?:[/:])([A-Za-z0-9]+).*$/
+        });
+        Object.defineProperty(this, "token", {
+            configurable: true,
+            value: null
         });
 
         this.options = Object.freeze(Util.mergeDefault(DefaultClientOptions, options));
@@ -34,13 +36,35 @@ export default class LavasfyClient {
     }
 
     public addNode(options: NodeOptions): void {
-        this.nodes.set(options.name, new Node(this, options));
+        this.nodes.set(options.id, new Node(this, Util.mergeDefault(DefaultNodeOptions, options)));
     }
 
+    public removeNode(id: string): boolean {
+        if (!this.nodes.size) throw new Error("No nodes available, please add a node first...");
+        if (!id) throw new Error("Provide a valid node identifier to delete it");
+
+        return this.nodes.delete(id);
+    }
+
+    /**
+     * @param {string} [id] The node id, if not specified it will return a random node. 
+     */
+    public getNode(): Node;
+    public getNode(id: string): Node | undefined
+    public getNode(id?: string): Node | undefined {
+        if (!this.nodes.size) throw new Error("No nodes available, please add a node first...");
+
+        if (!id) return [...this.nodes.values()].sort(() => 0.5 - Math.random())[0];
+        
+        return this.nodes.get(id);
+    }
+
+    /** Determine the URL is a valid Spotify URL or not */
     public isValidURL(url: string): boolean {
         return this.spotifyPattern.test(url);
     }
 
+    /** A method to retrieve the Spotify API token. (this method only needs to be invoked once after the {@link LavasfyClient} instantiated) */
     public async requestToken(): Promise<void> {
         if (this.nextRequest) return;
 
@@ -53,8 +77,9 @@ export default class LavasfyClient {
                 })
                 .send("grant_type=client_credentials");
 
-            Object.defineProperty(this, "token", { value: `${token_type} ${access_token}`, configurable: true });
+            Object.defineProperty(this, "token", { value: `${token_type} ${access_token}` });
             Object.defineProperty(this, "nextRequest", {
+                configurable: true,
                 value: setTimeout(() => {
                     delete this.nextRequest;
                     void this.requestToken();
