@@ -1,9 +1,10 @@
+import { UnresolvedTrack } from "..";
 export interface NodeOptions {
-    name: string;
+    id: string;
     host: string;
     port: number | string;
     auth: string;
-    secure: boolean;
+    secure?: boolean;
 }
 export interface LavalinkTrack {
     track: string;
@@ -18,10 +19,10 @@ export interface LavalinkTrack {
         uri: string;
     };
 }
-export interface LavalinkTrackResponse {
-    type: "TRACK" | "PLAYLIST" | "SEARCH";
+export interface LavalinkTrackResponse<T = UnresolvedTrack | LavalinkTrack | null> {
+    loadType: "TRACK" | "PLAYLIST" | "SEARCH";
     playlistName: string | undefined | null;
-    tracks: LavalinkTrack[];
+    tracks: T[];
     exception?: {
         message: string;
         severity: string;

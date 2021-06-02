@@ -4,12 +4,16 @@ import Resolver from "./Resolver";
 export default class Node {
     client: LavasfyClient;
     resolver: Resolver;
-    name: string;
+    id: string;
     host: string;
     port: number | string;
     auth: string;
-    secure?: string;
+    secure: boolean;
     private readonly methods;
     constructor(client: LavasfyClient, options: NodeOptions);
+    /**
+     * A method for loading Spotify URLs
+     * @returns Lavalink-like /loadtracks response
+     */
     load(url: string): Promise<LavalinkTrackResponse | null>;
 }
