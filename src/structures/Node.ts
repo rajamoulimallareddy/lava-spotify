@@ -5,7 +5,7 @@ import Resolver from "./Resolver";
 export default class Node {
     public resolver = new Resolver(this);
 
-    public id!: string;
+    public name!: string;
     public host!: string;
     public port!: number | string;
     public auth!: string;
@@ -19,7 +19,7 @@ export default class Node {
 
     public constructor(public client: LavasfyClient, options: NodeOptions) {
         Object.defineProperties(this, {
-            id: { value: options.id, enumerable: true },
+            id: { value: options.name, enumerable: true },
             host: { value: options.host },
             port: { value: options.port },
             auth: { value: options.auth },

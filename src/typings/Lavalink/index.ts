@@ -1,7 +1,7 @@
 import { UnresolvedTrack } from "..";
 
 export interface NodeOptions {
-    id: string;
+    name: string;
     host: string;
     port: number | string;
     auth: string;

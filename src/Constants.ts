@@ -10,7 +10,7 @@ export const DefaultClientOptions: ClientOptions = {
 };
 
 export const DefaultNodeOptions: NodeOptions = {
-    id: "",
+    name: "",
     host: "",
     port: "",
     auth: "",
