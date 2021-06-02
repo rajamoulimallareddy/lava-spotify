@@ -22,12 +22,12 @@ export interface LavalinkTrack {
     };
 }
 
-export interface LavalinkTrackResponse<T = UnresolvedTrack | LavalinkTrack> {
+export interface LavalinkTrackResponse<T = UnresolvedTrack | LavalinkTrack | null> {
     loadType: "TRACK" | "PLAYLIST" | "SEARCH";
     playlistName: string | undefined | null;
     tracks: T[];
     exception?: {
         message: string;
         severity: string;
-    }
+    };
 } 
