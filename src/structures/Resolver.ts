@@ -37,7 +37,7 @@ export default class Resolver {
                 spotifyAlbum.name
             );
         } catch (e) {
-            return e.body?.error.message === "invalid id" ? null : null
+            return e.body?.error.message === "invalid id" ? null : null;
         }
     }
 
@@ -59,7 +59,7 @@ export default class Resolver {
                 spotifyPlaylist.name
             );
         } catch (e) {
-            return e.status === 404 ? null : null
+            return e.status === 404 ? null : null;
         }
     }
 
@@ -78,7 +78,7 @@ export default class Resolver {
                 this.autoResolve ? [await unresolvedTrack.resolve()] as LavalinkTrack[] : [unresolvedTrack]
             );
         } catch (e) {
-            return e.body?.error.message === "invalid id" ? null : null
+            return e.body?.error.message === "invalid id" ? null : null;
         }
     }
 
@@ -147,7 +147,7 @@ export default class Resolver {
         return Object.assign({
             loadType,
             tracks,
-            playlistName,
+            playlistName
         }, exceptionMsg ? { exception: { message: exceptionMsg, severity: "COMMON" } } : {});
     }
 }
