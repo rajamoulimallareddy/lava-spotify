@@ -23,7 +23,7 @@ export interface LavalinkTrack {
 }
 
 export interface LavalinkTrackResponse<T = UnresolvedTrack | LavalinkTrack | null> {
-    loadType: "TRACK" | "PLAYLIST" | "SEARCH";
+    type: "TRACK" | "PLAYLIST" | "SEARCH";
     playlistName: string | undefined | null;
     tracks: T[];
     exception?: {

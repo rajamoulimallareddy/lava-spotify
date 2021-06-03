@@ -143,9 +143,9 @@ export default class Resolver {
         };
     }
 
-    private buildResponse(loadType: LavalinkTrackResponse["loadType"], tracks: Array<UnresolvedTrack | LavalinkTrack> = [], playlistName?: string, exceptionMsg?: string): LavalinkTrackResponse {
+    private buildResponse(type: LavalinkTrackResponse["type"], tracks: Array<UnresolvedTrack | LavalinkTrack> = [], playlistName?: string, exceptionMsg?: string): LavalinkTrackResponse {
         return Object.assign({
-            loadType,
+            type,
             tracks,
             playlistName
         }, exceptionMsg ? { exception: { message: exceptionMsg, severity: "COMMON" } } : {});
