@@ -1,5 +1,4 @@
 import { ClientOptions, NodeOptions } from "./typings";
-import request from "node-superfetch";
 import Node from "./structures/Node";
 import Util from "./Util";
 import { DefaultClientOptions, DefaultNodeOptions } from "./Constants";
@@ -9,26 +8,12 @@ export default class LavasfyClient {
     public options: Readonly<ClientOptions>;
     /** The {@link Node}s are stored here */
     public nodes = new Map<string, Node>();
-    /** Spotify API base URL */
-    public readonly baseURL!: string;
     /** A RegExp that will be used for validate and parse URLs */
     public readonly spotifyPattern!: RegExp;
-    /** The token to access the Spotify API */
-    public readonly token!: string | null;
-
-    private nextRequest?: NodeJS.Timeout;
 
     public constructor(options: ClientOptions, nodesOpt: NodeOptions[]) {
-        Object.defineProperty(this, "baseURL", {
-            enumerable: true,
-            value: "https://api.spotify.com/v1"
-        });
         Object.defineProperty(this, "spotifyPattern", {
-            value: /^(?:https:\/\/open\.spotify\.com\/(?:user\/[A-Za-z0-9]+\/)?|spotify:)(album|playlist|track)(?:[/:])([A-Za-z0-9]+).*$/
-        });
-        Object.defineProperty(this, "token", {
-            configurable: true,
-            value: null
+            value: /(?:https:\/\/open\.spotify\.com\/|spotify:)(?:.+)?(track|playlist|artist|album)[/:]([A-Za-z0-9]+)/
         });
 
         this.options = Object.freeze(Util.mergeDefault(DefaultClientOptions, options));
@@ -49,47 +34,16 @@ export default class LavasfyClient {
     /**
      * @param {string} [id] The node id, if not specified it will return a random node. 
      */
-    public getNode(): Node;
-    public getNode(id: string): Node | undefined
     public getNode(id?: string): Node | undefined {
         if (!this.nodes.size) throw new Error("No nodes available, please add a node first...");
 
         if (!id) return [...this.nodes.values()].sort(() => 0.5 - Math.random())[0];
-        
+
         return this.nodes.get(id);
     }
 
     /** Determine the URL is a valid Spotify URL or not */
     public isValidURL(url: string): boolean {
         return this.spotifyPattern.test(url);
-    }
-
-    /** A method to retrieve the Spotify API token. (this method only needs to be invoked once after the {@link LavasfyClient} instantiated) */
-    public async requestToken(): Promise<void> {
-        if (this.nextRequest) return;
-
-        try {
-            const { body: { access_token, token_type, expires_in } }: any = await request
-                .post("https://accounts.spotify.com/api/token")
-                .set({
-                    Authorization: `Basic ${Buffer.from(`${this.options.clientID}:${this.options.clientSecret}`).toString("base64")}`,
-                    "Content-Type": "application/x-www-form-urlencoded"
-                })
-                .send("grant_type=client_credentials");
-
-            Object.defineProperty(this, "token", { value: `${token_type} ${access_token}` });
-            Object.defineProperty(this, "nextRequest", {
-                configurable: true,
-                value: setTimeout(() => {
-                    delete this.nextRequest;
-                    void this.requestToken();
-                }, expires_in * 1000)
-            });
-        } catch (e) {
-            if (e.status === 400) {
-                return Promise.reject(new Error("Invalid Spotify client."));
-            }
-            await this.requestToken();
-        }
     }
 }

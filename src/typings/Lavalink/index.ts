@@ -2,8 +2,7 @@ import { UnresolvedTrack } from "..";
 
 export interface NodeOptions {
     name: string;
-    host: string;
-    port: number | string;
+    url: string;
     auth: string;
     secure?: boolean;
 }
@@ -30,4 +29,4 @@ export interface LavalinkTrackResponse<T = UnresolvedTrack | LavalinkTrack | nul
         message: string;
         severity: string;
     };
-} 
+}

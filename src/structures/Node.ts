@@ -6,22 +6,21 @@ export default class Node {
     public resolver = new Resolver(this);
 
     public name!: string;
-    public host!: string;
-    public port!: number | string;
+    public url!: string;
     public auth!: string;
     public secure!: boolean;
 
     private readonly methods = {
         album: this.resolver.getAlbum.bind(this.resolver),
         playlist: this.resolver.getPlaylist.bind(this.resolver),
-        track: this.resolver.getTrack.bind(this.resolver)
+        track: this.resolver.getTrack.bind(this.resolver),
+        artist: this.resolver.getArtist.bind(this.resolver)
     };
 
     public constructor(public client: LavasfyClient, options: NodeOptions) {
         Object.defineProperties(this, {
             id: { value: options.name, enumerable: true },
-            host: { value: options.host },
-            port: { value: options.port },
+            url: { value: options.url },
             auth: { value: options.auth },
             secure: { value: options.secure }
         });

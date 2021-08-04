@@ -1,101 +1,52 @@
-import Node from "./Node";
-import request from "node-superfetch";
-import { LavalinkTrack, LavalinkTrackResponse, SpotifyAlbum, SpotifyPlaylist, SpotifyTrack, UnresolvedTrack } from "../typings";
+import petitio from "petitio";
+import { getTracks, getData, Tracks } from "spotify-url-info";
+import { LavalinkTrack, LavalinkTrackResponse, UnresolvedTrack } from "../typings";
 import Util from "../Util";
+import Node from "./Node";
 
 export default class Resolver {
     public client = this.node.client;
     public cache = new Map<string, LavalinkTrack>();
 
-    public constructor(public node: Node) {}
-
-    public get token(): string {
-        return this.client.token!;
-    }
-
-    public get playlistLoadLimit(): number {
-        return this.client.options.playlistLoadLimit!;
-    }
+    public constructor(public node: Node) { }
 
     public get autoResolve(): boolean {
         return this.client.options.autoResolve!;
     }
 
-    public async getAlbum(id: string): Promise<LavalinkTrackResponse | null> {
-        try {
-            if (!this.token) throw new Error("No Spotify access token.");
-            // @ts-expect-error 2322
-            const { body: spotifyAlbum }: { body: SpotifyAlbum } = await request
-                .get(`${this.client.baseURL}/albums/${id}`)
-                .set("Authorization", this.token);
-
-            const unresolvedAlbumTracks = spotifyAlbum?.tracks.items.map(track => this.buildUnresolved(track)) ?? [];
-
-            return this.buildResponse(
-                "PLAYLIST",
-                this.autoResolve ? (await Promise.all(unresolvedAlbumTracks.map(x => x.resolve()))).filter(Boolean) as LavalinkTrack[] : unresolvedAlbumTracks,
-                spotifyAlbum.name
-            );
-        } catch (e) {
-            return e.body?.error.message === "invalid id" ? null : null;
-        }
+    public async getTrack(id: string): Promise<LavalinkTrackResponse | any> {
+        const tracks = await getTracks(`https://open.spotify.com/track/${id}`);
+        const unresolvedTracks = this.buildUnresolved(tracks[0]);
+        return this.buildResponse("TRACK", this.autoResolve ? ([await unresolvedTracks.resolve()] as LavalinkTrack[]) : [unresolvedTracks]);
     }
 
-    public async getPlaylist(id: string): Promise<LavalinkTrackResponse | null> {
-        try {
-            if (!this.token) throw new Error("No Spotify access token.");
-            // @ts-expect-error 2322
-            const { body: spotifyPlaylist }: { body: SpotifyPlaylist } = await request
-                .get(`${this.client.baseURL}/playlists/${id}`)
-                .set("Authorization", this.token);
-
-            await this.getPlaylistTracks(spotifyPlaylist);
-
-            const unresolvedPlaylistTracks = spotifyPlaylist.tracks.items.map(x => this.buildUnresolved(x.track));
-
-            return this.buildResponse(
-                "PLAYLIST",
-                this.autoResolve ? (await Promise.all(unresolvedPlaylistTracks.map(x => x.resolve()))).filter(Boolean) as LavalinkTrack[] : unresolvedPlaylistTracks,
-                spotifyPlaylist.name
-            );
-        } catch (e) {
-            return e.status === 404 ? null : null;
+    public async getPlaylist(id: string): Promise<LavalinkTrackResponse | any> {
+        const tracks = await getTracks(`https://open.spotify.com/playlist/${id}`);
+        const metaData = await getData(`https://open.spotify.com/playlist/${id}`);
+        let unresolvedPlaylistTracks;
+        // @ts-expect-error no typings
+        if (typeof tracks[0].track === "object") {
+            // @ts-expect-error no typings
+            unresolvedPlaylistTracks = tracks.filter(x => x.track).map(track => this.buildUnresolved(track.track));
+        } else {
+            // @ts-expect-error no typings
+            unresolvedPlaylistTracks = tracks.filter(x => x.track).map(track => this.buildUnresolved(track));
         }
+        return this.buildResponse("PLAYLIST", this.autoResolve ? ((await Promise.all(unresolvedPlaylistTracks.map((x) => x.resolve()))).filter(Boolean) as LavalinkTrack[]) : unresolvedPlaylistTracks, metaData.name);
     }
 
-    public async getTrack(id: string): Promise<LavalinkTrackResponse | null> {
-        try {
-            if (!this.token) throw new Error("No Spotify access token.");
-            // @ts-expect-error 2322
-            const { body: spotifyTrack }: { body: SpotifyTrack } = await request
-                .get(`${this.client.baseURL}/tracks/${id}`)
-                .set("Authorization", this.token);
-
-            const unresolvedTrack = this.buildUnresolved(spotifyTrack);
-
-            return this.buildResponse(
-                "TRACK",
-                this.autoResolve ? [await unresolvedTrack.resolve()] as LavalinkTrack[] : [unresolvedTrack]
-            );
-        } catch (e) {
-            return e.body?.error.message === "invalid id" ? null : null;
-        }
+    public async getAlbum(id: string): Promise<LavalinkTrackResponse | any> {
+        const tracks = await getTracks(`https://open.spotify.com/album/${id}`);
+        const metaData = await getData(`https://open.spotify.com/album/${id}`);
+        const unresolvedAlbumTracks = tracks.map(track => track && this.buildUnresolved(track)) ?? [];
+        return this.buildResponse("PLAYLIST", this.autoResolve ? ((await Promise.all(unresolvedAlbumTracks.map((x) => x.resolve()))).filter(Boolean) as LavalinkTrack[]) : unresolvedAlbumTracks, metaData.name);
     }
 
-    private async getPlaylistTracks(spotifyPlaylist: SpotifyPlaylist): Promise<void> {
-        let nextPage = spotifyPlaylist.tracks.next;
-        let pageLoaded = 1;
-        while (nextPage && (this.playlistLoadLimit === 0 ? true : pageLoaded < this.playlistLoadLimit)) {
-            // @ts-expect-error 2322
-            const { body: spotifyPlaylistPage }: { body: SpotifyPlaylist["tracks"] } = await request
-                .get(nextPage)
-                .set("Authorization", this.token);
-
-            spotifyPlaylist.tracks.items.push(...spotifyPlaylistPage.items);
-
-            nextPage = spotifyPlaylistPage.next;
-            pageLoaded++;
-        }
+    public async getArtist(id: string): Promise<LavalinkTrackResponse | any> {
+        const tracks = await getTracks(`https://open.spotify.com/artist/${id}`);
+        const metaData = await getData(`https://open.spotify.com/artist/${id}`);
+        const unresolvedAlbumTracks = tracks.map(track => track && this.buildUnresolved(track)) ?? [];
+        return this.buildResponse("PLAYLIST", this.autoResolve ? ((await Promise.all(unresolvedAlbumTracks.map((x) => x.resolve()))).filter(Boolean) as LavalinkTrack[]) : unresolvedAlbumTracks, metaData.name);
     }
 
     private async resolve(unresolvedTrack: UnresolvedTrack): Promise<LavalinkTrack | undefined> {
@@ -117,37 +68,35 @@ export default class Resolver {
     }
 
     private async retrieveTrack(unresolvedTrack: UnresolvedTrack): Promise<LavalinkTrack | undefined> {
-        const params = new URLSearchParams({
-            identifier: `ytsearch:${unresolvedTrack.info.author} - ${unresolvedTrack.info.title} ${this.client.options.audioOnlyResults ? "Audio" : ""}`
-        });
-        // @ts-expect-error 2322
-        const { body: response }: { body: LavalinkTrackResponse<LavalinkTrack> } = await request
-            .get(`http${this.node.secure ? "s" : ""}://${this.node.host}:${this.node.port}/loadtracks?${params.toString()}`)
-            .set("Authorization", this.node.auth);
+        const params = new URLSearchParams({ identifier: `ytsearch:${unresolvedTrack.info.author} - ${unresolvedTrack.info.title} ${this.client.options.audioOnlyResults ? "Audio" : ""}` });
+        const response: LavalinkTrackResponse<LavalinkTrack> = await petitio(`http${this.node.secure ? "s" : ""}://${this.node.url}/loadtracks?${params.toString()}`).header("Authorization", this.node.auth).json();
         return response.tracks[0];
     }
 
-    private buildUnresolved(spotifyTrack: SpotifyTrack): UnresolvedTrack {
+    private buildUnresolved(spotifyTrack: Tracks): UnresolvedTrack {
         const _this = this; // eslint-disable-line
         return {
             info: {
                 identifier: spotifyTrack.id,
                 title: spotifyTrack.name,
-                author: spotifyTrack.artists.map(x => x.name).join(", "),
+                author: spotifyTrack.artists!.map((x) => x.name).join(" "),
                 uri: spotifyTrack.external_urls.spotify,
                 length: spotifyTrack.duration_ms
             },
             resolve(): Promise<LavalinkTrack | undefined> {
-                return _this.resolve(this); 
+                return _this.resolve(this);
             }
         };
     }
 
     private buildResponse(type: LavalinkTrackResponse["type"], tracks: Array<UnresolvedTrack | LavalinkTrack> = [], playlistName?: string, exceptionMsg?: string): LavalinkTrackResponse {
-        return Object.assign({
-            type,
-            tracks,
-            playlistName
-        }, exceptionMsg ? { exception: { message: exceptionMsg, severity: "COMMON" } } : {});
+        return Object.assign(
+            {
+                type,
+                tracks,
+                playlistName
+            },
+            exceptionMsg ? { exception: { message: exceptionMsg, severity: "COMMON" } } : {}
+        );
     }
 }
