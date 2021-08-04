@@ -28,7 +28,7 @@ export default class LavasfyClient {
         });
         Object.defineProperty(this, "token", {
             configurable: true,
-            value: "Bearer BQCUtFgsdydEPMEhLnkZivLcdj0bsP1ByDJ1_QV4eRe9SJhHJsC1F9Y02ly1LTo_60q2pIdgi60CF-7U6b8"
+            value: null
         });
 
         this.options = Object.freeze(Util.mergeDefault(DefaultClientOptions, options));
