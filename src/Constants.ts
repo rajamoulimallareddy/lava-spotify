@@ -7,7 +7,7 @@ export const DefaultClientOptions: ClientOptions = {
     audioOnlyResults: false,
     useSpotifyMetadata: false,
     autoResolve: false,
-    fetchStrategy: "SCRAPE"
+    fetchStrategy: "API"
 };
 
 export const DefaultNodeOptions: NodeOptions = {

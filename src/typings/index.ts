@@ -2,9 +2,9 @@ import { LavalinkTrack } from "./Lavalink";
 
 export interface ClientOptions {
     /** Spotify client ID */
-    clientID: string;
+    clientID?: string;
     /** Spotify client Secret */
-    clientSecret: string;
+    clientSecret?: string;
     /**
      * Maximum pages of playlist to load (each page contains 100 tracks)
      * @default 2

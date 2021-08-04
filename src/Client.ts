@@ -28,7 +28,7 @@ export default class LavasfyClient {
         });
         Object.defineProperty(this, "token", {
             configurable: true,
-            value: null
+            value: "Bearer BQCUtFgsdydEPMEhLnkZivLcdj0bsP1ByDJ1_QV4eRe9SJhHJsC1F9Y02ly1LTo_60q2pIdgi60CF-7U6b8"
         });
 
         this.options = Object.freeze(Util.mergeDefault(DefaultClientOptions, options));
@@ -70,7 +70,7 @@ export default class LavasfyClient {
         try {
             const request = await petitio("https://accounts.spotify.com/api/token", "POST")
                 .header({
-                    Authorization: `Basic ${Buffer.from(this.options.clientID + ":" + this.options.clientSecret).toString("base64")}`,
+                    Authorization: `Basic ${Buffer.from(this.options.clientID + ":" + this.options.clientSecret).toString("base64")}`, // eslint-disable-line
                     "Content-Type": "application/x-www-form-urlencoded"
                 }).body("grant_type=client_credentials").send();
 

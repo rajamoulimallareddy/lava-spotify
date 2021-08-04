@@ -1,6 +1,6 @@
 import petitio from "petitio";
 import { getTracks, getData, Tracks } from "spotify-url-info";
-import { LavalinkTrack, LavalinkTrackResponse, SpotifyAlbum, SpotifyPlaylist, SpotifyTrack, UnresolvedTrack } from "../typings";
+import { LavalinkTrack, LavalinkTrackResponse, SpotifyAlbum, SpotifyArtist, SpotifyPlaylist, SpotifyTrack, UnresolvedTrack } from "../typings";
 import Util from "../Util";
 import Node from "./Node";
 
@@ -69,10 +69,17 @@ export default class Resolver {
     }
 
     public async getArtist(id: string): Promise<LavalinkTrackResponse | any> {
-        const tracks = await getTracks(`https://open.spotify.com/artist/${id}`);
-        const metaData = await getData(`https://open.spotify.com/artist/${id}`);
-        const unresolvedAlbumTracks = tracks.map(track => track && this.buildUnresolved(track)) ?? [];
-        return this.buildResponse("PLAYLIST", this.autoResolve ? ((await Promise.all(unresolvedAlbumTracks.map((x) => x.resolve()))).filter(Boolean) as LavalinkTrack[]) : unresolvedAlbumTracks, metaData.name);
+        if (this.client.options.fetchStrategy === "SCRAPE") {
+            const tracks = await getTracks(`https://open.spotify.com/artist/${id}`);
+            const metaData = await getData(`https://open.spotify.com/artist/${id}`);
+            const unresolvedAlbumTracks = tracks.map(track => track && this.buildUnresolved(track)) ?? [];
+            return this.buildResponse("PLAYLIST", this.autoResolve ? ((await Promise.all(unresolvedAlbumTracks.map((x) => x.resolve()))).filter(Boolean) as LavalinkTrack[]) : unresolvedAlbumTracks, metaData.name);
+        }
+        const metaData = await petitio(`${this.client.baseURL}/artists/${id}`).header("Authorization", this.token).json();
+        const spotifyArtis: SpotifyArtist = await petitio(`${this.client.baseURL}/artists/${id}/top-tracks`).query("country", "US").header("Authorization", this.token).json();
+        const unresolvedArtistTracks = spotifyArtis.tracks.map(track => track && this.buildUnresolved(track as Tracks)) ?? [];
+        return this.buildResponse("PLAYLIST", this.autoResolve ? ((await Promise.all(unresolvedArtistTracks.map((x) => x.resolve()))).filter(Boolean) as LavalinkTrack[]) : unresolvedArtistTracks, metaData.name);
+
     }
 
     private async getPlaylistTracks(spotifyPlaylist: SpotifyPlaylist): Promise<void> {

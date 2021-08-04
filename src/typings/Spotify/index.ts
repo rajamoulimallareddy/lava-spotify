@@ -32,3 +32,7 @@ export interface SpotifyTrack {
     id: string;
     name: string;
 }
+
+export interface SpotifyArtist {
+    tracks: SpotifyTrack[];
+}
