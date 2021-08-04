@@ -5,8 +5,7 @@ export default class Node {
     client: LavasfyClient;
     resolver: Resolver;
     name: string;
-    host: string;
-    port: number | string;
+    url: string;
     auth: string;
     secure: boolean;
     private readonly methods;
