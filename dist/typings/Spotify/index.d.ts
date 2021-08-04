@@ -1,3 +1,4 @@
+import { ArtistsEntity } from "spotify-url-info";
 export interface SpotifyArtist {
     name: string;
 }
@@ -21,7 +22,7 @@ export interface SpotifyPlaylist {
     };
 }
 export interface SpotifyTrack {
-    artists: SpotifyArtist[];
+    artists: ArtistsEntity[];
     duration_ms: number;
     external_urls: {
         spotify: string;

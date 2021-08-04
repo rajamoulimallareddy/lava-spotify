@@ -82,6 +82,10 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="clientoptions.html#audioonlyresults" class="tsd-kind-icon">audio<wbr>Only<wbr>Results</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="clientoptions.html#autoresolve" class="tsd-kind-icon">auto<wbr>Resolve</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="clientoptions.html#clientid" class="tsd-kind-icon">clientID</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="clientoptions.html#clientsecret" class="tsd-kind-icon">client<wbr>Secret</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="clientoptions.html#fetchstrategy" class="tsd-kind-icon">fetch<wbr>Strategy</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="clientoptions.html#playlistloadlimit" class="tsd-kind-icon">playlist<wbr>Load<wbr>Limit</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="clientoptions.html#usespotifymetadata" class="tsd-kind-icon">use<wbr>Spotify<wbr>Metadata</a></li>
 							</ul>
 						</section>
@@ -96,7 +100,7 @@
 					<div class="tsd-signature tsd-kind-icon">audio<wbr>Only<wbr>Results<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/891f7fa/src/typings/index.ts#L8">typings/index.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/typings/index.ts#L17">typings/index.ts:17</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -116,7 +120,7 @@
 					<div class="tsd-signature tsd-kind-icon">auto<wbr>Resolve<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/891f7fa/src/typings/index.ts#L20">typings/index.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/typings/index.ts#L29">typings/index.ts:29</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -132,12 +136,82 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="clientid" class="tsd-anchor"></a>
+					<h3>clientID</h3>
+					<div class="tsd-signature tsd-kind-icon">clientID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/typings/index.ts#L5">typings/index.ts:5</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Spotify client ID</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="clientsecret" class="tsd-anchor"></a>
+					<h3>client<wbr>Secret</h3>
+					<div class="tsd-signature tsd-kind-icon">client<wbr>Secret<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/typings/index.ts#L7">typings/index.ts:7</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Spotify client Secret</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="fetchstrategy" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> fetch<wbr>Strategy</h3>
+					<div class="tsd-signature tsd-kind-icon">fetch<wbr>Strategy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;API&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;SCRAPE&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/typings/index.ts#L35">typings/index.ts:35</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>fetchStrategy is options for you to fetch data from api or scrape</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><p>&quot;SCRAPE&quot;</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="playlistloadlimit" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> playlist<wbr>Load<wbr>Limit</h3>
+					<div class="tsd-signature tsd-kind-icon">playlist<wbr>Load<wbr>Limit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/typings/index.ts#L12">typings/index.ts:12</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Maximum pages of playlist to load (each page contains 100 tracks)</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><p>2</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="usespotifymetadata" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> use<wbr>Spotify<wbr>Metadata</h3>
 					<div class="tsd-signature tsd-kind-icon">use<wbr>Spotify<wbr>Metadata<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/891f7fa/src/typings/index.ts#L13">typings/index.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/typings/index.ts#L22">typings/index.ts:22</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -182,6 +256,18 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="clientoptions.html#autoresolve" class="tsd-kind-icon">auto<wbr>Resolve</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="clientoptions.html#clientid" class="tsd-kind-icon">clientID</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="clientoptions.html#clientsecret" class="tsd-kind-icon">client<wbr>Secret</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="clientoptions.html#fetchstrategy" class="tsd-kind-icon">fetch<wbr>Strategy</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="clientoptions.html#playlistloadlimit" class="tsd-kind-icon">playlist<wbr>Load<wbr>Limit</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="clientoptions.html#usespotifymetadata" class="tsd-kind-icon">use<wbr>Spotify<wbr>Metadata</a>

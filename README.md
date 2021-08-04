@@ -20,9 +20,8 @@ const lavasfy = new LavasfyClient({
 }, [
     {
         name: "main",
-        host: "localhost",
-        port: 2333,
-        password: "youshallnotpass"
+        url: "localhost:2333",
+        auth: "youshallnotpass"
     }
 ]);
 
@@ -43,7 +42,10 @@ const lavasfy = new LavasfyClient({
     const track = await node.load("https://open.spotify.com/track/4zsxBgPkUFYEoOGDncGIBd");
     console.log(track);
 
-    // Response object: https://github.com/Allvaa/lava-spotify/blob/master/src/typings/Lavalink/index.ts#L22
+    const artist = await node.load("https://open.spotify.com/artist/2IGbyqqfidUAYqW19slJuR");
+    console.log(artist)
+
+    // Response object: https://github.com/Allvaa/lava-spotify/blob/master/src/typings/Lavalink/index.ts#L25
 })();
 ```
 [Documentation](https://allvaa.github.io/lava-spotify "Documentaion")

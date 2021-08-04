@@ -82,9 +82,8 @@
 <span style="color: #000000">}, [</span>
 <span style="color: #000000">    {</span>
 <span style="color: #000000">        </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;main&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">        </span><span style="color: #001080">host:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;localhost&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">        </span><span style="color: #001080">port:</span><span style="color: #000000"> </span><span style="color: #098658">2333</span><span style="color: #000000">,</span>
-<span style="color: #000000">        </span><span style="color: #001080">password:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;youshallnotpass&quot;</span>
+<span style="color: #000000">        </span><span style="color: #001080">url:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;localhost:2333&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">auth:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;youshallnotpass&quot;</span>
 <span style="color: #000000">    }</span>
 <span style="color: #000000">]);</span>
 
@@ -105,7 +104,10 @@
 <span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">track</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">node</span><span style="color: #000000">.</span><span style="color: #795E26">load</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;https://open.spotify.com/track/4zsxBgPkUFYEoOGDncGIBd&quot;</span><span style="color: #000000">);</span>
 <span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">track</span><span style="color: #000000">);</span>
 
-<span style="color: #000000">    </span><span style="color: #008000">// Response object: https://github.com/Allvaa/lava-spotify/blob/master/src/typings/Lavalink/index.ts#L22</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">artist</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">node</span><span style="color: #000000">.</span><span style="color: #795E26">load</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;https://open.spotify.com/artist/2IGbyqqfidUAYqW19slJuR&quot;</span><span style="color: #000000">);</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">artist</span><span style="color: #000000">)</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// Response object: https://github.com/Allvaa/lava-spotify/blob/master/src/typings/Lavalink/index.ts#L25</span>
 <span style="color: #000000">})();</span>
 </code></pre>
 				<p><a href="https://allvaa.github.io/lava-spotify" title="Documentaion">Documentation</a></p>

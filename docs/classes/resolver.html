@@ -95,6 +95,8 @@
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="resolver.html#autoresolve" class="tsd-kind-icon">auto<wbr>Resolve</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="resolver.html#playlistloadlimit" class="tsd-kind-icon">playlist<wbr>Load<wbr>Limit</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="resolver.html#token" class="tsd-kind-icon">token</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -105,6 +107,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="resolver.html#getalbum" class="tsd-kind-icon">get<wbr>Album</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="resolver.html#getartist" class="tsd-kind-icon">get<wbr>Artist</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="resolver.html#getplaylist" class="tsd-kind-icon">get<wbr>Playlist</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="resolver.html#getplaylisttracks" class="tsd-kind-icon">get<wbr>Playlist<wbr>Tracks</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="resolver.html#gettrack" class="tsd-kind-icon">get<wbr>Track</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="resolver.html#resolve" class="tsd-kind-icon">resolve</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="resolver.html#retrievetrack" class="tsd-kind-icon">retrieve<wbr>Track</a></li>
@@ -125,7 +128,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/891f7fa/src/structures/Resolver.ts#L9">structures/Resolver.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/structures/Resolver.ts#L9">structures/Resolver.ts:9</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -147,7 +150,7 @@
 					<div class="tsd-signature tsd-kind-icon">cache<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/lavalinktrack.html" class="tsd-signature-type" data-tsd-kind="Interface">LavalinkTrack</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/891f7fa/src/structures/Resolver.ts#L9">structures/Resolver.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/structures/Resolver.ts#L9">structures/Resolver.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -157,7 +160,7 @@
 					<div class="tsd-signature tsd-kind-icon">client<span class="tsd-signature-symbol">:</span> <a href="lavasfyclient.html" class="tsd-signature-type" data-tsd-kind="Class">LavasfyClient</a><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/891f7fa/src/structures/Resolver.ts#L8">structures/Resolver.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/structures/Resolver.ts#L8">structures/Resolver.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -181,10 +184,44 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/891f7fa/src/structures/Resolver.ts#L13">structures/Resolver.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/structures/Resolver.ts#L21">structures/Resolver.ts:21</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="playlistloadlimit" class="tsd-anchor"></a>
+					<h3>playlist<wbr>Load<wbr>Limit</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> playlistLoadLimit<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/structures/Resolver.ts#L17">structures/Resolver.ts:17</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="token" class="tsd-anchor"></a>
+					<h3>token</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> token<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/structures/Resolver.ts#L13">structures/Resolver.ts:13</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -201,7 +238,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/891f7fa/src/structures/Resolver.ts#L92">structures/Resolver.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/structures/Resolver.ts#L130">structures/Resolver.ts:130</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -233,7 +270,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/891f7fa/src/structures/Resolver.ts#L76">structures/Resolver.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/structures/Resolver.ts#L114">structures/Resolver.ts:114</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -256,7 +293,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/891f7fa/src/structures/Resolver.ts#L38">structures/Resolver.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/structures/Resolver.ts#L59">structures/Resolver.ts:59</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -279,7 +316,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/891f7fa/src/structures/Resolver.ts#L45">structures/Resolver.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/structures/Resolver.ts#L71">structures/Resolver.ts:71</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -296,13 +333,13 @@
 					<a name="getplaylist" class="tsd-anchor"></a>
 					<h3>get<wbr>Playlist</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Playlist<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/lavalinktrackresponse.html" class="tsd-signature-type" data-tsd-kind="Interface">LavalinkTrackResponse</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/unresolvedtrack.html" class="tsd-signature-type" data-tsd-kind="Interface">UnresolvedTrack</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/lavalinktrack.html" class="tsd-signature-type" data-tsd-kind="Interface">LavalinkTrack</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Playlist<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/891f7fa/src/structures/Resolver.ts#L23">structures/Resolver.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/structures/Resolver.ts#L37">structures/Resolver.ts:37</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -311,7 +348,30 @@
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/lavalinktrackresponse.html" class="tsd-signature-type" data-tsd-kind="Interface">LavalinkTrackResponse</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/unresolvedtrack.html" class="tsd-signature-type" data-tsd-kind="Interface">UnresolvedTrack</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/lavalinktrack.html" class="tsd-signature-type" data-tsd-kind="Interface">LavalinkTrack</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="getplaylisttracks" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>Playlist<wbr>Tracks</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Playlist<wbr>Tracks<span class="tsd-signature-symbol">(</span>spotifyPlaylist<span class="tsd-signature-symbol">: </span><a href="../interfaces/spotifyplaylist.html" class="tsd-signature-type" data-tsd-kind="Interface">SpotifyPlaylist</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/structures/Resolver.ts#L78">structures/Resolver.ts:78</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>spotifyPlaylist: <a href="../interfaces/spotifyplaylist.html" class="tsd-signature-type" data-tsd-kind="Interface">SpotifyPlaylist</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -319,13 +379,13 @@
 					<a name="gettrack" class="tsd-anchor"></a>
 					<h3>get<wbr>Track</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Track<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/lavalinktrackresponse.html" class="tsd-signature-type" data-tsd-kind="Interface">LavalinkTrackResponse</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/unresolvedtrack.html" class="tsd-signature-type" data-tsd-kind="Interface">UnresolvedTrack</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/lavalinktrack.html" class="tsd-signature-type" data-tsd-kind="Interface">LavalinkTrack</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Track<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/891f7fa/src/structures/Resolver.ts#L17">structures/Resolver.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/structures/Resolver.ts#L25">structures/Resolver.ts:25</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -334,7 +394,7 @@
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/lavalinktrackresponse.html" class="tsd-signature-type" data-tsd-kind="Interface">LavalinkTrackResponse</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/unresolvedtrack.html" class="tsd-signature-type" data-tsd-kind="Interface">UnresolvedTrack</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/lavalinktrack.html" class="tsd-signature-type" data-tsd-kind="Interface">LavalinkTrack</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -348,7 +408,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/891f7fa/src/structures/Resolver.ts#L52">structures/Resolver.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/structures/Resolver.ts#L90">structures/Resolver.ts:90</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -371,7 +431,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/891f7fa/src/structures/Resolver.ts#L70">structures/Resolver.ts:70</a></li>
+									<li>Defined in <a href="https://github.com/Orchit07/lava-spotify/blob/ab7a2a7/src/structures/Resolver.ts#L108">structures/Resolver.ts:108</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -422,6 +482,12 @@
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="resolver.html#autoresolve" class="tsd-kind-icon">auto<wbr>Resolve</a>
 							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="resolver.html#playlistloadlimit" class="tsd-kind-icon">playlist<wbr>Load<wbr>Limit</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="resolver.html#token" class="tsd-kind-icon">token</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="resolver.html#buildresponse" class="tsd-kind-icon">build<wbr>Response</a>
 							</li>
@@ -436,6 +502,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="resolver.html#getplaylist" class="tsd-kind-icon">get<wbr>Playlist</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="resolver.html#getplaylisttracks" class="tsd-kind-icon">get<wbr>Playlist<wbr>Tracks</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="resolver.html#gettrack" class="tsd-kind-icon">get<wbr>Track</a>

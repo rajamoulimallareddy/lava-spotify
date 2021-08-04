@@ -1,6 +1,15 @@
 import { LavalinkTrack } from "./Lavalink";
 
 export interface ClientOptions {
+    /** Spotify client ID */
+    clientID: string;
+    /** Spotify client Secret */
+    clientSecret: string;
+    /**
+     * Maximum pages of playlist to load (each page contains 100 tracks)
+     * @default 2
+     */
+    playlistLoadLimit?: number;
     /**
      * This will filter the search to video that only contains audio of the Spotify track (likely)
      * @default false
@@ -18,6 +27,12 @@ export interface ClientOptions {
      * @default false
      */
     autoResolve?: boolean;
+    /**
+     * fetchStrategy is options for you to fetch data from api or scrape
+     * 
+     * @default "SCRAPE"
+     */
+    fetchStrategy?: "API" | "SCRAPE";
 }
 
 export interface UnresolvedTrack {
