@@ -64,7 +64,6 @@ export default class LavasfyClient {
 
     /** A method to retrieve the Spotify API token. (this method only needs to be invoked once after the {@link LavasfyClient} instantiated) */
     public async requestToken(): Promise<void> {
-        if (this.options.fetchStrategy === "SCRAPE") return;
         if (this.nextRequest) return;
 
         try {
