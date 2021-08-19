@@ -1,6 +1,6 @@
 import petitio from "petitio";
 import { getTracks, getData, Tracks } from "spotify-url-info";
-import { LavalinkTrack, LavalinkTrackResponse, SpotifyAlbum, SpotifyArtist, SpotifyPlaylist, SpotifyTrack, UnresolvedTrack } from "../typings";
+import { LavalinkTrack, LavalinkTrackResponse, SpotifyAlbum, SpotifyArtist, SpotifyPlaylist, SpotifyTrack, UnresolvedTrack, SpotifyEpisode, SpotifyShow } from "../typings";
 import Util from "../Util";
 import Node from "./Node";
 
@@ -63,6 +63,7 @@ export default class Resolver {
             const unresolvedAlbumTracks = tracks.map(track => track && this.buildUnresolved(track)) ?? [];
             return this.buildResponse("PLAYLIST", this.autoResolve ? ((await Promise.all(unresolvedAlbumTracks.map((x) => x.resolve()))).filter(Boolean) as LavalinkTrack[]) : unresolvedAlbumTracks, metaData.name);
         }
+        if (!this.token) throw new Error("No Spotify access token.");
         const spotifyAlbum: SpotifyAlbum = await petitio(`${this.client.baseURL}/albums/${id}`, "GET").header("Authorization", this.token).json();
         const unresolvedAlbumTracks = spotifyAlbum?.tracks.items.map((track) => this.buildUnresolved(track as Tracks)) ?? [];
         return this.buildResponse("PLAYLIST", this.autoResolve ? ((await Promise.all(unresolvedAlbumTracks.map((x) => x.resolve()))).filter(Boolean) as LavalinkTrack[]) : unresolvedAlbumTracks, spotifyAlbum.name);
@@ -72,14 +73,53 @@ export default class Resolver {
         if (this.client.options.fetchStrategy === "SCRAPE") {
             const tracks = await getTracks(`https://open.spotify.com/artist/${id}`);
             const metaData = await getData(`https://open.spotify.com/artist/${id}`);
-            const unresolvedAlbumTracks = tracks.map(track => track && this.buildUnresolved(track)) ?? [];
-            return this.buildResponse("PLAYLIST", this.autoResolve ? ((await Promise.all(unresolvedAlbumTracks.map((x) => x.resolve()))).filter(Boolean) as LavalinkTrack[]) : unresolvedAlbumTracks, metaData.name);
+            const unresolvedArtistTracks = tracks.map(track => track && this.buildUnresolved(track)) ?? [];
+            return this.buildResponse("PLAYLIST", this.autoResolve ? ((await Promise.all(unresolvedArtistTracks.map((x) => x.resolve()))).filter(Boolean) as LavalinkTrack[]) : unresolvedArtistTracks, metaData.name);
         }
+        if (!this.token) throw new Error("No Spotify access token.");
         const metaData = await petitio(`${this.client.baseURL}/artists/${id}`).header("Authorization", this.token).json();
         const spotifyArtis: SpotifyArtist = await petitio(`${this.client.baseURL}/artists/${id}/top-tracks`).query("country", "US").header("Authorization", this.token).json();
         const unresolvedArtistTracks = spotifyArtis.tracks.map(track => track && this.buildUnresolved(track as Tracks)) ?? [];
         return this.buildResponse("PLAYLIST", this.autoResolve ? ((await Promise.all(unresolvedArtistTracks.map((x) => x.resolve()))).filter(Boolean) as LavalinkTrack[]) : unresolvedArtistTracks, metaData.name);
 
+    }
+
+    public async getEpisode(id: string): Promise<LavalinkTrackResponse | any> {
+        if (this.client.options.fetchStrategy === "SCRAPE") {
+            const tracks = await getTracks(`https://open.spotify.com/episode/${id}`);
+            const metaData = await getData(`https://open.spotify.com/episode/${id}`);
+            const unresolvedEpisodeTracks = tracks.map(track => track && this.buildUnresolved(track)) ?? [];
+            return this.buildResponse("PLAYLIST", this.autoResolve ? ((await Promise.all(unresolvedEpisodeTracks.map((x) => x.resolve()))).filter(Boolean) as LavalinkTrack[]) : unresolvedEpisodeTracks, metaData.name);
+        }
+        if (!this.token) throw new Error("No Spotify access token.");
+        const metaData: SpotifyEpisode = await petitio(`${this.client.baseURL}/episodes/${id}`, "GET").query("market", "US").header("Authorization", this.token).json();
+        return this.getShow(metaData.show.id);
+    }
+
+    public async getShow(id: string): Promise<LavalinkTrackResponse | any> {
+        if (this.client.options.fetchStrategy === "SCRAPE") {
+            const tracks = await getTracks(`https://open.spotify.com/show/${id}`);
+            const metaData = await getData(`https://open.spotify.com/show/${id}`);
+            const unresolvedShowEpisodes = tracks.map(track => track && this.buildUnresolved(track)) ?? [];
+            return this.buildResponse("PLAYLIST", this.autoResolve ? ((await Promise.all(unresolvedShowEpisodes.map((x) => x.resolve()))).filter(Boolean) as LavalinkTrack[]) : unresolvedShowEpisodes, metaData.name);
+        }
+        if (!this.token) throw new Error("No Spotify access token.");
+        const spotifyShow: SpotifyShow = await petitio(`${this.client.baseURL}/shows/${id}`).query("market", "US").header("Authorization", this.token).json();
+        await this.getShowEpisodes(spotifyShow);
+        const unresolvedShowEpisodes = spotifyShow.episodes.items.map((x) => this.buildUnresolved(x as any));
+        return this.buildResponse("PLAYLIST", this.autoResolve ? ((await Promise.all(unresolvedShowEpisodes.map((x) => x.resolve()))).filter(Boolean) as LavalinkTrack[]) : unresolvedShowEpisodes, spotifyShow.name);
+    }
+
+    private async getShowEpisodes(spotifyShow: SpotifyShow): Promise<void> {
+        let nextPage = spotifyShow.episodes.next;
+        let pageLoaded = 1;
+        while (nextPage && (this.playlistLoadLimit === 0 ? true : pageLoaded < this.playlistLoadLimit)) {
+            const spotifyEpisodePage: SpotifyShow["episodes"] = await petitio(nextPage).header("Authorization", this.token).json();
+
+            spotifyShow.episodes.items.push(...spotifyEpisodePage.items);
+            nextPage = spotifyEpisodePage.next;
+            pageLoaded++;
+        }
     }
 
     private async getPlaylistTracks(spotifyPlaylist: SpotifyPlaylist): Promise<void> {
@@ -124,7 +164,7 @@ export default class Resolver {
             info: {
                 identifier: spotifyTrack.id,
                 title: spotifyTrack.name,
-                author: spotifyTrack.artists!.map((x) => x.name).join(" "),
+                author: spotifyTrack.artists ? spotifyTrack.artists.map((x) => x.name).join(" ") : undefined ?? "",
                 uri: spotifyTrack.external_urls.spotify,
                 length: spotifyTrack.duration_ms
             },

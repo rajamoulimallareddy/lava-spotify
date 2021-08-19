@@ -12,6 +12,9 @@ export default class Resolver {
     getPlaylist(id: string): Promise<LavalinkTrackResponse | any>;
     getAlbum(id: string): Promise<LavalinkTrackResponse | any>;
     getArtist(id: string): Promise<LavalinkTrackResponse | any>;
+    getEpisode(id: string): Promise<LavalinkTrackResponse | any>;
+    getShow(id: string): Promise<LavalinkTrackResponse | any>;
+    private getShowEpisodes;
     private getPlaylistTracks;
     private resolve;
     private retrieveTrack;

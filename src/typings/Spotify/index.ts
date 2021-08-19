@@ -36,3 +36,39 @@ export interface SpotifyTrack {
 export interface SpotifyArtist {
     tracks: SpotifyTrack[];
 }
+
+export interface SpotifyEpisode {
+    external_urls: {
+        spotify: string;
+    };
+    id: string;
+    name: string;
+    show: {
+        id: string;
+        name: string;
+        external_urls: {
+            spotify: string;
+        };
+    };
+}
+
+export interface SpotifyShow {
+    episodes: {
+        items: Array<{
+            name: string;
+            external_urls: {
+                spotify: string;
+            };
+            id: string;
+            duration_ms: number;
+            artist: null | undefined;
+        }>;
+        next: string | null;
+        previous: string | null;
+    };
+    external_urls: {
+        spotify: string;
+    };
+    id: string;
+    name: string;
+}

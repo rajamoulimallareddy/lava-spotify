@@ -24,7 +24,7 @@ export default class LavasfyClient {
             value: "https://api.spotify.com/v1"
         });
         Object.defineProperty(this, "spotifyPattern", {
-            value: /^(?:https:\/\/open\.spotify\.com\/(?:user\/[A-Za-z0-9]+\/)?|spotify:)(album|playlist|track|artist)(?:[/:])([A-Za-z0-9]+).*$/
+            value: /^(?:https:\/\/open\.spotify\.com\/(?:user\/[A-Za-z0-9]+\/)?|spotify:)(album|playlist|track|artist|episode|show)(?:[/:])([A-Za-z0-9]+).*$/
         });
         Object.defineProperty(this, "token", {
             configurable: true,

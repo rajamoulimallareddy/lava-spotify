@@ -14,7 +14,9 @@ export default class Node {
         album: this.resolver.getAlbum.bind(this.resolver),
         playlist: this.resolver.getPlaylist.bind(this.resolver),
         track: this.resolver.getTrack.bind(this.resolver),
-        artist: this.resolver.getArtist.bind(this.resolver)
+        artist: this.resolver.getArtist.bind(this.resolver),
+        episode: this.resolver.getEpisode.bind(this.resolver),
+        show: this.resolver.getShow.bind(this.resolver)
     };
 
     public constructor(public client: LavasfyClient, options: NodeOptions) {
