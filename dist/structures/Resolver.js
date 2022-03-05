@@ -161,7 +161,7 @@ class Resolver {
             info: {
                 identifier: spotifyTrack.id,
                 title: spotifyTrack.name,
-                author: spotifyTrack.artists ? spotifyTrack.artists.map((x) => x.name).join(" ") : undefined !== null && undefined !== void 0 ? undefined : "",
+                author: spotifyTrack.artists ? spotifyTrack.artists.map((x) => `[${x.name}](${x.external_urls.spotify})`).join(", ") : undefined !== null && undefined !== void 0 ? undefined : "",
                 uri: spotifyTrack.external_urls.spotify,
                 length: spotifyTrack.duration_ms
             },
